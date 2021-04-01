@@ -1,0 +1,40 @@
+<div class="animated fadeIn">
+    <div class="row">
+      <div class="col">
+        <div class="wrapper">
+          <main>
+            <div class="content-section">
+              <div class=" mrgn-0-auto order-view mt30 max-WT-700">
+                <form [formGroup] = "form">
+                  <div class="main-block-innner mb40 mt40">
+                    <div class="add-store-block input-style">
+                      <div class="form-group row my-5">
+                        <div class="col-md-4">
+                          <label >
+                            University Name :
+                          </label>
+                        </div>
+                        
+                        <div class="col-md-7">
+                          <input type="text" class="form-control" formControlName = "groupName" placeholder="University name" maxlength="256"
+                            (keypress)="service.preventSpace($event)" minlength="2">
+                            <small *ngIf = "form.get('groupName').hasError('required') && (form.get('groupName').dirty || form.get('groupName').touched) " class="text-danger">
+                              *University name is required.
+                            </small>
+                        </div>
+                      </div>
+                      <div class="text-center mt-5 mb-5">
+                        <button type="button" class="btn btn-primary px-4" (click)="addGroup()" [disabled]="form.invalid" >Add</button>
+                        <button type="button" class="btn btn-danger px-4 ml-3" routerLink="/group-mgt">Cancel</button>
+                      </div>
+                    </div>
+                  </div>
+                </form>
+              </div>
+            </div>
+          </main>
+        </div>
+      </div>
+    </div>
+  </div>
+  

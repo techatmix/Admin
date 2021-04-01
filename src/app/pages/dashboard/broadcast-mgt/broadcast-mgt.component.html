@@ -1,0 +1,70 @@
+<div class="animated fadeIn">
+    <div class="row">
+      <div class="col">
+        <div class="wrapper">
+          <main>
+            <div class="content-section">
+              <div class=" mrgn-0-auto order-view mt30 max-WT-700">
+                <form >
+                  <div class="main-block-innner mb40 mt40">
+                    <div class="add-store-block input-style">
+                     
+                     <div class="col">
+                        <h5>
+                            Send Notifications
+                        </h5>
+                        
+                         <label class="checkbox-design d-block mb-2 mt-2">
+                            <input type="checkbox" (change) ="changeUser($event.target.checked)"  value="true"><span></span>All Users
+                          </label>
+
+                          <form [formGroup]="form" >
+
+                         
+                          <mat-form-field class="example-chip-list" *ngIf = "!isallUser">
+                            <mat-label>Recipient</mat-label>
+                            <mat-chip-list #chipList aria-label="Fruit selection">
+                              <mat-chip
+                                *ngFor="let fruit of users"
+                                [selectable]="selectable"
+                                [removable]="removable"
+                                (removed)="remove(fruit)">
+                                {{fruit}}
+                                <mat-icon matChipRemove *ngIf="removable">cancel</mat-icon>
+                              </mat-chip>
+                              <input
+                                placeholder="user..."
+                                #fruitInput
+                                formControlName="fruitCtrl"
+                                [matAutocomplete]="auto"
+                                [matChipInputFor]="chipList"
+                                [matChipInputSeparatorKeyCodes]="separatorKeysCodes"
+                                (matChipInputTokenEnd)="add($event)">
+                            </mat-chip-list>
+                            <mat-autocomplete #auto="matAutocomplete" (optionSelected)="selected($event)">
+                              <mat-option *ngFor="let fruit of allUsers" [value]="fruit.id">
+                                {{fruit.name}}
+                              </mat-option>
+                            </mat-autocomplete>
+                          </mat-form-field>
+                          <textarea placeholder="Enter your message" formControlName="textArea" class="form-control border" id="" ></textarea>
+                          <small class="text-danger" *ngIf = "form.get('textArea').hasError('required') && (form.get('textArea').dirty|| form.get('textArea').touched)" >
+                            *Message is required.
+                          </small>
+                        </form>
+                        </div>
+                      <div class="text-center mt-5 mb-5">
+                        <button type="button" class="btn btn-primary px-4" (click)="sendMessage()" >Send</button>
+                        <button type="button" class="btn btn-danger px-4 ml-3" >Cancel</button>
+                      </div>
+                    </div>
+                  </div>
+                </form>
+              </div>
+            </div>
+          </main>
+        </div>
+      </div>
+    </div>
+  </div>
+  

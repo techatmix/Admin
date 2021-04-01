@@ -1,0 +1,44 @@
+<div class="animated fadeIn">
+    <div class="row">
+      <div class="col">
+        <div class="wrapper">
+          <main>
+            <div class="content-section">
+              <div class=" mrgn-0-auto order-view mt30 max-WT-700">
+                <form [formGroup] ="form">
+                  <div class="main-block-innner mb40 mt40">
+                    <div class="add-store-block input-style">
+                
+
+                   
+                      <div class="form-group row  my-3">
+                        <label class="col-md-4">
+                            Year :
+                        </label>
+                        <div class="col-md-7">
+                          <input type="text" class="form-control" formControlName = "year" placeholder="Year" maxlength="4"
+                          (keypress)="service.inputKeyPress($event)" minlength="4">
+                          <small *ngIf = "form.get('year').hasError('required') && (form.get('year').dirty || form.get('year').touched) " class="text-danger">
+                            *Year is required.
+                          </small>
+                          <small *ngIf = "form.get('year').hasError('minlength') && (form.get('year').dirty || form.get('year').touched) " class="text-danger">
+                            *Year must be 4 digit.
+                          </small>
+                        </div>
+                        
+                      </div>
+                      <div class="text-center mt-5 mb-5">
+                        <button type="button" class="btn btn-primary px-4" (click)="addYear()" >Add</button>
+                        <button type="button" class="btn btn-danger px-4 ml-3" routerLink="/group-mgt/manage-college">Cancel</button>
+                      </div>
+                    </div>
+                  </div>
+                </form>
+              </div>
+            </div>
+          </main>
+        </div>
+      </div>
+    </div>
+  </div>
+  

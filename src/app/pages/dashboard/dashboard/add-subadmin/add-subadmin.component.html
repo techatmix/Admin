@@ -1,0 +1,243 @@
+<div class="animated fadeIn">
+  <div class="row">
+    <div class="col">
+      <div class="wrapper">
+        <main>
+          <div class="content-section">
+            <div class=" mrgn-0-auto order-view mt30 max-WT-700">
+              <form [formGroup]="addSubAdminForm">
+                <div class="main-block-innner mb40 mt40">
+                  <div class="add-store-block input-style">
+
+                    <!-- **********************Subadmin profile image ****************  -->
+
+                    <div class="text-center mt-4 mb-5">
+                      <div class="flex-block align-center">
+                        <div class="profile_block"  style="position: relative">
+                          <img [src]="imageUrl || 'assets/img/avatars/profile-img.jpg'"  class="imagePicture"
+                             alt="banner image"   />
+                          <br>
+                          <span class="camera">     
+                            <i class="fa fa-camera" style="display:flex; ">                   
+                              <input type="file" class="cameraInput" accept="image/jpg,image/jpeg,image/png" id="file"
+                                formControlName='file'  (change)="ValidateFileUpload($event)" >
+                              </i>
+                              </span>
+                        </div>
+                        <div
+                          *ngIf="addSubAdminForm.get('file').invalid && (addSubAdminForm.get('file').dirty || addSubAdminForm.get('file').touched)">
+                          <span *ngIf="addSubAdminForm.get('file').hasError('pattern')" style="color: red">*Subadmin
+                            image is required.</span>
+
+                        </div>
+                      </div>
+                    </div>
+
+                    <div class="form-group row align-items-center">
+                      <label class="col-md-4">
+                        First Name :
+                      </label>
+                      <div class="col-md-7">
+                        <input type="text" class="form-control" placeholder="First name"
+                        formControlName="firstName" maxlength="256"
+                          (keypress)="inputkeyPress($event)" minlength="2">
+                        <div class="error-block"
+                          *ngIf="(addSubAdminForm.controls['firstName'].dirty || addSubAdminForm.controls['firstName'].touched) && addSubAdminForm.controls['firstName'].invalid">
+                          <small style='color:red'
+                            [ngClass]="{error:addSubAdminForm.controls['firstName'].hasError('required')}"
+                            *ngIf="addSubAdminForm.controls['firstName'].hasError('required')">*Please enter
+                            user first name.</small>
+                          <small style='color:red'
+                            [ngClass]="{error: addSubAdminForm.controls['firstName'].hasError('pattern')}"
+                            *ngIf="addSubAdminForm.controls['firstName'].hasError('pattern')">*First name
+                            should be characters only.</small>
+                          <small style='color:red'
+                            [ngClass]="{error: addSubAdminForm.controls['firstName'].hasError('maxlength') && addSubAdminForm.controls['firstName'].dirty}"
+                            *ngIf="addSubAdminForm.controls['firstName'].hasError('maxlength') && ! addSubAdminForm.controls['firstName'].hasError('pattern')">*First
+                            name should be maximum 256 characters.</small>
+                          <small style='color:red'
+                            [ngClass]="{error: addSubAdminForm.controls['firstName'].hasError('minlength') && addSubAdminForm.controls['firstName'].dirty}"
+                            *ngIf="addSubAdminForm.controls['firstName'].hasError('minlength') && ! addSubAdminForm.controls['firstName'].hasError('pattern')">*First
+                            name should be atleast 2 characters.</small>
+                        </div>
+                      </div>
+                    </div>
+
+                    <div class="form-group row align-items-center">
+                      <label class="col-md-4">
+                        Last Name :
+                      </label>
+                      <div class="col-md-7">
+                        <input type="text" class="form-control" placeholder="Last name"
+                        formControlName="lastName" maxlength="256"
+                          (keypress)="inputkeyPress($event)" minlength="2">
+                      </div>
+                    </div>
+
+
+                    <div class="form-group row align-items-center">
+                      <label class="col-md-4">
+                        Email :
+                      </label>
+                      <div class="col-md-7">
+                        <input type="email" class="form-control" placeholder="Email"
+                          (keypress)="passwordKeyPress($event)" formControlName ="email"
+                          maxlength="50">
+                        <div class="error-block"
+                          *ngIf="addSubAdminForm.controls['email'].dirty && addSubAdminForm.controls['email'].invalid">
+                          <small style='color:red'
+                            [ngClass]="{error:addSubAdminForm.controls['email'].hasError('required')}"
+                            *ngIf="addSubAdminForm.controls['email'].hasError('required')">*Please enter an
+                            email.</small>
+                          <small style='color:red'
+                            [ngClass]="{error: addSubAdminForm.controls['email'].hasError('pattern')}"
+                            *ngIf="addSubAdminForm.controls['email'].hasError('pattern')">*Please enter
+                            valid email.</small>
+                          <small style='color:red'
+                            [ngClass]="{error: addSubAdminForm.controls['email'].hasError('maxlength') && addSubAdminForm.controls['email'].dirty}"
+                            *ngIf="addSubAdminForm.controls['email'].hasError('maxlength') && ! addSubAdminForm.controls['email'].hasError('pattern')">*Please
+                            enter valid email.</small>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="form-group row align-items-baseline">
+                      <label class="col-md-4">
+                        Phone Number :
+                      </label>
+                      <div class="col-md-3">
+                        <select name="patient" class="custom-select form-control" formControlName = "phoneCode"
+                          id="inputGroupSelect01" aria-labelledby="dropdownMenuButton">
+                          <option value="" selected>Dial Code</option>
+                          <option value="+1">+1</option>
+                          <option value="+44">+44</option>
+                          <option value="+49">+49</option>
+                        </select>
+                      </div>
+                      <div class="col-md-4">
+                        <input type="tel" class="form-control" placeholder="Phone Number"
+                          (keypress)="inputKeyPress($event)" formControlName ="phoneNumber"
+                          maxlength="20">
+                        <small class="error-block text-nowrap text-start"
+                          *ngIf="addSubAdminForm.controls['phoneNumber'].dirty && addSubAdminForm.controls['phoneNumber'].invalid">
+                          <small style='color:red'
+                            [ngClass]="{error:addSubAdminForm.controls['phoneNumber'].hasError('required')}"
+                            *ngIf="addSubAdminForm.controls['phoneNumber'].hasError('required')">*Please
+                            enter a phone number.</small>
+                          <small style='color:red'
+                            [ngClass]="{error: addSubAdminForm.controls['phoneNumber'].hasError('pattern')}"
+                            *ngIf="addSubAdminForm.controls['phoneNumber'].hasError('pattern')">*Please
+                            enter valid Phone number.</small>
+                        </small>
+                      </div>
+                    </div>
+
+                    <div class="form-group row align-items-center">
+                      <label class="col-md-4">
+                        Password :
+                      </label>
+                      <div class="col-md-7">
+                        <input type="password" class="form-control" (keypress)="passwordKeyPress($event)"
+                        formControlName='password' maxlength="16" placeholder="Password">
+                        <div class="error-block"
+                          *ngIf="addSubAdminForm.controls['password'].dirty && addSubAdminForm.controls['password'].invalid">
+
+                          <small style='color:red'
+                            [ngClass]="{error:addSubAdminForm.controls['password'].hasError('required')}"
+                            *ngIf="addSubAdminForm.controls['password'].hasError('required')">*Please enter
+                            password.</small>
+                          <small style='color:red'
+                            [ngClass]="{error:addSubAdminForm.controls['password'].hasError('pattern')}"
+                            *ngIf="addSubAdminForm.controls['password'].hasError('pattern')">*Password must
+                            be between 8 to 16 characters and contain at least one special character , one
+                            digit.</small>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="form-group row align-items-center">
+                      <label class="col-md-4">
+                        Confirm Password :
+                      </label>
+                      <div class="col-md-7">
+                        <input type="password" class="form-control" (keypress)="passwordKeyPress($event)"
+                          placeholder="Confirm Password" formControlName='confirmPassword'
+                          maxlength="16">
+                        <div class="error-block" *ngIf="addSubAdminForm.controls['confirmPassword'].dirty">
+                          <small style='color:red'
+                            *ngIf="addSubAdminForm.controls['confirmPassword'].value != addSubAdminForm.controls['password'].value">*Password
+                            mismatched.</small>
+                        </div>
+                      </div>
+                    </div>
+
+
+                    <!-- <div class="d-flex mt-5 max-WT-400 justify-content-center mb-5"> -->
+                    <div class="form-group row ">
+                      <label class="col-md-12">
+                        Permissions :
+                      </label>
+                    </div>
+                    <!-- <div class="pl-5"> -->
+                    <div class="align-items-baseline row text-nowrap">
+                      <div class="col-md-6">
+                        <label class="checkbox-design d-block">
+                          <input type="checkbox" formControlName = "dashboard" value="true" ><span></span>Dashboard
+                        </label>
+                      </div>
+                      <div class="col-md-6">
+                        <label class="checkbox-design d-block">
+                          <input type="checkbox"  formControlName = "userManagement"  value="True"><span></span>Manage User
+                        </label>
+                      </div>
+
+
+                    </div>
+
+                    <div class="align-items-baseline row text-nowrap">
+                      <div class="col-md-6">
+                        <label class="checkbox-design d-block mb-2 mt-2">
+                          <input type="checkbox" formControlName = "groupManagement" value="True"><span></span>Manage Group 
+                        </label>
+                      </div>
+                      <div class="col-md-6">
+                        <label class="checkbox-design d-block">
+                          <input type="checkbox" formControlName = "broadcastManagement" value="True"><span></span>Manage Broadcast 
+                        </label>
+                      </div>
+
+                    </div>
+
+
+                    <div class="align-items-baseline row text-nowrap">
+
+                      <div class="col-md-6">
+                        <label class="checkbox-design d-block mb-2 mt-2">
+                          <input type="checkbox"  formControlName = "reportManagement"  value="True"><span></span>User Information
+                        </label>
+                      </div>
+
+                      <div class="col-md-6">
+                        <label class="checkbox-design d-block mb-2 mt-2">
+                          <input type="checkbox"  formControlName = "problemReport"  value="True"><span></span>Problem Report 
+                        </label>
+                      </div>
+
+
+                    </div>
+
+
+
+
+                    <div class="text-center mt-5 mb-5">
+                      <button class="btn btn-primary px-4" (click)="addSubAdminApi()">Add</button>
+                      <button class="btn btn-danger px-4 ml-3" routerLink="/role-mgt">Cancel</button>
+                    </div>
+                  </div>
+                </div>
+              </form>
+            </div>
+          </div>
+        </main>
+      </div>
+    </div>
+  </div>
+</div>

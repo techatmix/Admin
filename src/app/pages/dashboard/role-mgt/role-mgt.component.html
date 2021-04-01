@@ -1,0 +1,140 @@
+<div class="animated fadeIn">
+    <div class="row">
+        <div class="col">
+            <form class="form-horizontal" [formGroup] = "form">
+            <div class="form-group d-flex ">
+                <div class="col-md-4 p-0">
+                    <div class="input-group">
+                      <input type="search" id="input2-group2" formControlName = "search" 
+                       (keypress)="service.preventSpace($event)" name="input2-group2" class="form-control" placeholder="Search" >
+                      <span class="input-group-append">
+                        <button type="button" class="btn btn-primary" [disabled]="form.invalid" (click) = "userListApi()"><i class="fa fa-search wt"></i> Search</button>
+                      </span>
+                    </div>
+                  </div>
+                <div class="ml-5 d-flex w-100 justify-content-end  text-nowrap">
+                    <button type="button" routerLink="/add-subadmin" class="btn btn-light link font17" style="height: 35px;padding-top: 3px;">
+                        <i class="fa fa-plus-circle" aria-hidden="true">  Add Sub Admin </i> 
+                    </button>
+                    <!-- <a class="link font17"><i class="fas fa-plus-circle mr-1"></i> Add Sub Admin</a> -->
+                </div>
+            </div>
+        </form>
+        </div>
+    </div>
+    <div class="row">
+        <!--/.col-->
+    <div class="col">
+        <div class="card">
+          <div class="card-header">
+             Role Management
+          </div>
+          <div class="card-body">
+            <table class="table table-bordered table-striped">
+              <thead>
+                <tr class="text-center">
+                  <th>Sr. No.</th>
+                  <th> Name</th>
+                  <th> Email</th>
+                  <th> Phone No.</th>
+                  <th> Added on</th>
+                  <th>Actions</th>
+                 
+                </tr>
+              </thead>
+              <tbody  class="text-center">
+                <tr  class="text-center" *ngFor = "let user of userList | paginate: { itemsPerPage: itemPerPage, currentPage: currentPage, totalItems: total}; let i = index">
+                  <td>{{itemPerPage * (currentPage-1)+ i+1}}</td>
+                  <td>{{user?.firstName}} {{user?.lastName}}</td>
+                  <td>{{user?.email}}</td>
+                  <td>{{user?.mergeContact}}</td>
+                  <td>{{user?.createdAt | date : 'd/M/y' : 'UTC'}} </td>
+                  <td class="d-flex justify-content-center w-100">
+                    <i class="icon-eye mr-3" [routerLink] = "['/view-subadmin/'+user?._id]"></i>
+                    <i class="icon-pencil mr-3" [routerLink] = "['/edit-subadmin/'+user?._id]"></i>
+
+                    <label class="switch-sm mr-3 switch-pill switch-success" (click)="openActiveBlock(user?.status , user?._id)">
+                      <input type="checkbox" class="switch-input" [checked]="user?.status == 'ACTIVE'">
+                      <span class="switch-slider"></span>
+                    </label>
+                    <!-- <i class="icon-ban text-danger mr-3" ></i> -->
+                    <i class="icon-trash text-danger mr-3" (click)="openDeleteModal( user?._id)"></i>
+                </td>
+                </tr>
+
+                <tr *ngIf="!userList.length">
+                  <td class="table-no-record" colspan="6">No Record Found</td>
+              </tr>
+              
+              
+              </tbody>
+            </table>
+
+            <div class="custom-pagination my-3 d-flex justify-content-end" *ngIf="total > 10">
+              <pagination-controls (pageChange)="pagination($event)"></pagination-controls>
+          </div>
+          </div>
+        </div>
+      </div>
+      <!--/.col-->
+    </div>
+
+</div>
+
+
+
+<!-- delete hospital modal Start -->
+<div class="modal fade global-modal reset-modal" id="deleteUser">
+  <div class="modal-dialog max-WT-500">
+      <form class="change_password">
+          <div class="modal-content">
+              <div class="modal-header d-block text-center modal-header-custm">
+                  <h5 class="modal-title d-inline-block">Delete Subadmin?</h5>
+              </div>
+              <div class="modal-inner-content">
+                  <div class="modal-body">
+                      <div class="text-center modal_flax_height d-flex align-items-center justify-content-center">
+                          <div class="w-100">
+                              <p>Are you sure you want to delete this subadmin?</p>
+                              <div class="modal-btn-box">
+                                  <button type="button" class="btn btn-primary px-4" (click)="deleteUser()">Yes</button>
+                                  <button type="button" class="btn btn-danger  px-4 ml-2" data-dismiss="modal">No</button>
+                              </div>
+                          </div>
+                      </div>
+                  </div>
+              </div>
+          </div>
+      </form>
+  </div>
+</div>
+<!-- end delete hospital modal -->
+
+  <!-- Active and block subadmin user  -->
+
+<div class="modal fade global-modal reset-modal" id="actBlockStatus">
+  <div class="modal-dialog max-WT-500">
+      <form class="change_password">
+          <div class="modal-content">
+              <div class="modal-header d-block text-center modal-header-custm">
+                  <h5 class="modal-title d-inline-block" *ngIf = "subadminStatus == 'ACTIVE'">Block subadmin?</h5>
+                  <h5 class="modal-title d-inline-block" *ngIf = "subadminStatus == 'BLOCK'"> Active subadmin?</h5>
+              </div>
+              <div class="modal-inner-content">
+                  <div class="modal-body">
+                      <div class="text-center modal_flax_height d-flex align-items-center justify-content-center">
+                          <div class="w-100">
+                              <p *ngIf = "subadminStatus == 'ACTIVE'">Are you sure you want to block this subadmin?</p>
+                              <p *ngIf = "subadminStatus == 'BLOCK'">Are you sure you want to Active this subadmin?</p>
+                              <div class="modal-btn-box">
+                                  <button type="submit" class="btn btn-primary px-4" (click)="updateActiveBlock()" data-dismiss="modal">Yes</button>
+                                  <button type="button" class="btn btn-danger px-4 ml-2" style="min-width: 100px;" data-dismiss="modal">No</button>
+                              </div>
+                          </div>
+                      </div>
+                  </div>
+              </div>
+          </div>
+      </form>
+  </div>
+</div>

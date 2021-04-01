@@ -1,0 +1,85 @@
+<div class="animated fadeIn">
+    <div class="row">
+      <div class="col">
+        <div class="wrapper">
+            <main>
+                <div class="content-section">
+                  <div class=" mrgn-0-auto order-view mt30 max-WT-700">
+                    <div class="main-block-innner">
+                      <div class="add-store-block input-style mw-100">
+              
+                        <div class="form-user">
+                          <form>
+              
+                            <div class="text-center mt-4 mb-5">
+                              <div class="flex-block align-center">
+                                <div class="profile_block"  style="position: relative">
+                                  <img [src]="imageUrl"  class="imagePicture"  alt="banner image"   />
+                                </div>
+                              </div>
+                            </div>
+              
+                            <div class="form-group row">
+                              <label class="col-sm-6 col-form-label">
+                                First Name : 
+                              </label>
+                              <div class="col-sm-6">
+                                <p class=" col-form-label"> {{viewSubadmin?.firstName}} </p>
+                              </div>
+                            </div>
+              
+                            <div class="form-group row">
+                              <label class="col-sm-6 col-form-label">
+                                Last Name :
+                              </label>
+                              <div class="col-sm-6">
+                                <p class=" col-form-label"> {{viewSubadmin?.lastName}}</p>
+                              </div>
+                            </div>
+              
+              
+                            <div class="form-group row">
+                              <label class="col-sm-6 col-form-label">
+                                Email :
+                              </label>
+                              <div class="col-sm-6">
+                                <p class=" col-form-label">{{viewSubadmin?.email}}</p>
+                              </div>
+                            </div>
+                            <div class="form-group row">
+                              <label for="inputPassword" class="col-sm-6 col-form-label">
+                                Phone Number :
+                              </label>
+                              <div class="col-sm-6">
+                                <p class="col-form-label">{{viewSubadmin?.mergeContact}}</p>
+                              </div>
+                            </div>
+                            <div class="row ">
+                              <label class="col-md-12">
+                                Permissions :
+                              </label>
+                            </div>
+                            <div class="form-group row">
+                              <div class="col-sm-6 mt-3" *ngFor="let item of myPermission;index as i">
+                                {{item | titlecase }}
+                              </div>
+              
+                            </div>
+                          </form>
+              
+                        </div>
+                        <div class="d-flex justify-content-center mt-5 mb-5">
+                          <button class="btn btn-primary px-4" routerLink='/role-mgt'>Back</button>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <!-- Table Responsive End -->
+              
+              </main>
+              
+        </div>
+    </div>
+ </div>
+</div>

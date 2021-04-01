@@ -1,0 +1,49 @@
+<div class="animated fadeIn">
+    <div class="row">
+        <!--/.col-->
+    <div class="col">
+        <div class="card">
+          <div class="card-header">
+             User Information
+          </div>
+          <div class="card-body">
+            <table class="table table-bordered table-striped">
+              <thead>
+                <tr class="text-center">
+                  <th> Name</th>
+                  <th> Email</th>
+                  <th>Registered Date</th>
+                  <th>Last Login Time</th>
+                  <th># Of Connections</th>
+               
+                 
+                </tr>
+              </thead>
+              <tbody  class="text-center">
+                <tr  class="text-center" *ngFor = "let group of userList | paginate: { itemsPerPage: itemPerPage, currentPage: currentPage, totalItems: total}; let i = index">
+                  <td>{{itemPerPage * (currentPage-1)+ i+1}}</td>
+                  <td>{{group?.email || '--'}}</td>
+                  <td>{{group?.createdAt | date : 'd/M/y' : 'UTC'}}</td>
+                  <td> {{group?.lastLoginTime || '--' | date : 'd/M/y' : 'UTC'}} {{group?.lastLoginTime |  slice: group?.lastLoginTime.length-12  :  group?.lastLoginTime.length || '--'}} </td>
+
+                   <td>{{group?.connection_count || '--'}}</td>
+                  
+                   
+              </tr>
+              <tr *ngIf="!userList.length">
+                  <td class="table-no-record" colspan="6">No Record Found</td>
+              </tr>
+               
+              </tbody>
+            </table>
+            <div class="custom-pagination my-3 d-flex justify-content-end" *ngIf="total > 10">
+              <pagination-controls (pageChange)="pagination($event)"></pagination-controls>
+          </div>
+
+          </div>
+        </div>
+      </div>
+      <!--/.col-->
+    </div>
+
+</div>

@@ -1,0 +1,127 @@
+<div class="animated fadeIn">
+    <div class="row">
+        <div class="col">
+            <div class="form-group w-100 row justify-content-end">
+                <div class="text-align-end text-nowrap" >
+                    <button type="button" routerLink="/add-year" class="btn btn-light link font17" style="height: 35px;padding-top: 3px;">
+                        <i class="fa fa-plus-circle" aria-hidden="true">  Add Year </i> 
+                    </button>
+                </div>
+                <div class="col-md-2">
+                    <button type="button" (click) ="ExportCsv()"  class="btn btn-light link font17 px-4 text-nowrap"  >
+                        <i class="fa fa-download" aria-hidden="true">  Download Records </i>
+                        </button>
+                  </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <!--/.col-->
+    <div class="col">
+        <div class="card">
+          <div class="card-header">
+             Manage Years
+          </div>
+          <div class="card-body">
+            <table class="table table-bordered table-striped">
+              <thead>
+                <tr class="text-center">
+                    <th>Sr. No .</th>
+                  <th> Year</th>
+                  <th>Added on</th>
+                  <th>Actions</th>
+                 
+                </tr>
+              </thead>
+              <tbody  class="text-center">
+                <tr  class="text-center" *ngFor = "let group of yearList | paginate: { itemsPerPage: itemPerPage, currentPage: currentPage, totalItems: total}; let i = index">
+                    <td>{{itemPerPage * (currentPage-1)+ i+1}}</td>
+                    <td>{{group?.year}}</td>
+                    <td>{{group?.createdAt | date : 'd/M/y' : 'UTC'}}</td>
+                 <td class="d-flex justify-content-center w-100">
+                    
+                     <!-- <i class="icon-pencil mr-3" [routerLink] = "['/edit-accomodation/'+group?._id]"></i> -->
+                     <label class="switch-sm mr-3 switch-pill switch-success" (click)="openActiveBlock(group?.status , group?._id)">
+                        <input type="checkbox" class="switch-input" [checked]="group?.status == 'ACTIVE'">
+                        <span class="switch-slider"></span>
+                      </label>
+                     <i class="icon-trash text-danger mr-3" (click)="openDeleteModal(group?._id)"></i>
+                 </td>
+                 
+                </tr>
+                <tr *ngIf="!yearList.length">
+                    <td class="table-no-record" colspan="4">No Record Found</td>
+                </tr>
+               
+              </tbody>
+            </table>
+            
+            <div class="custom-pagination my-3 d-flex justify-content-end" *ngIf="total > 10">
+                <pagination-controls (pageChange)="pagination($event)"></pagination-controls>
+            </div>
+
+          </div>
+        </div>
+      </div>
+      <!--/.col-->
+    </div>
+
+</div>
+
+
+
+<!-- delete hospital modal Start -->
+<div class="modal fade global-modal reset-modal" id="deleteUser">
+  <div class="modal-dialog max-WT-500">
+      <form class="change_password">
+          <div class="modal-content">
+              <div class="modal-header d-block text-center modal-header-custm">
+                  <h5 class="modal-title d-inline-block">Delete Year?</h5>
+              </div>
+              <div class="modal-inner-content">
+                  <div class="modal-body">
+                      <div class="text-center modal_flax_height d-flex align-items-center justify-content-center">
+                          <div class="w-100">
+                              <p>Are you sure you want to delete this Year?</p>
+                              <div class="modal-btn-box">
+                                  <button type="button" class="btn btn-primary px-4" (click)="deleteUser()">Yes</button>
+                                  <button type="button" class="btn btn-danger  px-4 ml-2" data-dismiss="modal">No</button>
+                              </div>
+                          </div>
+                      </div>
+                  </div>
+              </div>
+          </div>
+      </form>
+  </div>
+</div>
+<!-- end delete hospital modal -->
+
+  <!-- Active and block group user  -->
+
+  <div class="modal fade global-modal reset-modal" id="actBlockStatus">
+    <div class="modal-dialog max-WT-500">
+        <form class="change_password">
+            <div class="modal-content">
+                <div class="modal-header d-block text-center modal-header-custm">
+                    <h5 class="modal-title d-inline-block" *ngIf = "groupStatus == 'ACTIVE'">Block Year?</h5>
+                    <h5 class="modal-title d-inline-block" *ngIf = "groupStatus == 'BLOCK'"> Active Year?</h5>
+                </div>
+                <div class="modal-inner-content">
+                    <div class="modal-body">
+                        <div class="text-center modal_flax_height d-flex align-items-center justify-content-center">
+                            <div class="w-100">
+                                <p *ngIf = "groupStatus == 'ACTIVE'">Are you sure you want to block this Year?</p>
+                                <p *ngIf = "groupStatus == 'BLOCK'">Are you sure you want to Active this Year?</p>
+                                <div class="modal-btn-box">
+                                    <button type="submit" class="btn btn-primary px-4" (click)="updateActiveBlock()" data-dismiss="modal">Yes</button>
+                                    <button type="button" class="btn btn-danger px-4 ml-2" data-dismiss="modal">No</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+  </div>

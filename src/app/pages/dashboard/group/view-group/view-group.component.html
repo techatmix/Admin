@@ -1,0 +1,39 @@
+<div class="animated fadeIn">
+    <div class="row">
+      <div class="col">
+        <div class="wrapper">
+          <main>
+            <div class="content-section">
+              <div class=" mrgn-0-auto order-view mt30 max-WT-700">
+                <form [formGroup] ="form">
+                  <div class="main-block-innner mb40 mt40">
+                    <div class="add-store-block input-style">
+                     
+                      <div class="form-group row my-3">
+                        <label class="col-md-4">
+                          Program Name :
+                        </label>
+                        <div class="col-md-7">
+                          <input type="text" class="form-control"  formControlName = "programName" placeholder="Program name" maxlength="256"
+                            (keypress)="service.preventSpace($event)" minlength="2">
+                            <small *ngIf = "form.get('programName').hasError('required') && (form.get('programName').dirty || form.get('programName').touched) " class="text-danger">
+                              *Program name is required.
+                            </small>
+                        </div>
+                      </div>
+
+                      <div class="text-center mt-5 mb-5">
+                        <button type="button" class="btn btn-primary px-4"  (click)="addProgram()" >Add</button>
+                        <button type="button" class="btn btn-danger px-4 ml-3" routerLink="/group-mgt/manage-program">Cancel</button>
+                      </div>
+                    </div>
+                  </div>
+                </form>
+              </div>
+            </div>
+          </main>
+        </div>
+      </div>
+    </div>
+  </div>
+  
